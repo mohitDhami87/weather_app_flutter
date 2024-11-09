@@ -14,10 +14,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final _dataSourceService = Datasource();
-  WeatherDataModel? _weather;
+  // WeatherDataModel? _weather;
 
   getCurrentWeatherData() async {
-    //get current city name
+    //get current location and city name
     final cityName = await _dataSourceService.getCurrentCity();
     //get weather for city
     getWeather(cityName);
@@ -29,9 +29,10 @@ class _HomeState extends State<Home> {
       await Provider.of<WeatherDataProvider>(context, listen: false).fetchData(cityName);
     }
     catch (e){
-       print('Error fetching weather data: $e');
+      //Showing error alert for invalid city name or any other error
         showErrorDialog(e.toString());
     }
+    // commented to show statemanagement without provider
     // try{
     //   final weather = await _dataSourceService.getWeatherData(city);
     //   setState(() {
@@ -44,7 +45,7 @@ class _HomeState extends State<Home> {
     //   showErrorDialog(e.toString());
     // }
   }
-
+  // Alert method
   void showErrorDialog(String message) {
     showDialog(
       context: context,
@@ -72,6 +73,7 @@ class _HomeState extends State<Home> {
 
     getCurrentWeatherData();
   }
+  
   @override
   Widget build(BuildContext context) {
     final textFieldBorder = OutlineInputBorder(
